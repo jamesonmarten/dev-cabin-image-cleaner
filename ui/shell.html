@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dev Cabin • Image Cleaner</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="bg-fallback" aria-hidden="true"></div>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M32 6c4 6-1 9 1 14 1.6 4.1 6.4 5.7 6.4 12.1C39.4 41 33 44 33 52c0 4.4 3 6 3 6s-14 0-14-13.2C22 35 30 32 24.5 23.5 21.3 18.6 26.5 14 32 6Z" fill="#F28A1A"/>
+            <path d="M27 22c3.2 4.2 1.2 6.8-1 9.2-2.3 2.5-4.7 5.3-4.7 11.4C21.3 53 27.9 56 27.9 56s-9.9-.7-9.9-12.7c0-7.4 4.4-10.6 7-13 2.2-2.1 3.4-3.6 2-8.3Z" fill="#FFC37A" opacity="0.9"/>
+            <path d="M20 46h24c1.7 0 3 1.3 3 3v1c0 1.7-1.3 3-3 3H20c-1.7 0-3-1.3-3-3v-1c0-1.7 1.3-3 3-3Z" fill="rgba(255,255,255,0.8)"/>
+          </svg>
+        </div>
+        <div class="title-wrap">
+          <h1>Dev Cabin Image Cleaner</h1>
+          <p class="subtitle">Resize, compress, preview, rotate, and download optimized assets.</p>
+        </div>
+      </div>
+      <div class="pill"><span class="dot"></span><span id="buildPill">Build</span></div>
+    </header>
+
+    <div class="card">
+      <div class="card-inner">
+        <div class="input-group">
+          <label for="imageInput">Select images to process (JPEG, PNG, SVG):</label>
+          <input type="file" id="imageInput" multiple accept=".jpg,.jpeg,.png,.svg" />
+
+          <div class="grid2" aria-label="Optimization settings">
+            <div class="field">
+              <label for="preset">Preset</label>
+              <select id="preset">
+                <option value="custom">Custom</option>
+                <option value="web_hero">Web – Hero (1600px, JPEG 85)</option>
+                <option value="web_thumb">Web – Thumbnail (480px, JPEG 80)</option>
+                <option value="store_listing">Marketplace (1200px, JPEG 88)</option>
+              </select>
+              <div class="hint">Choose a starting point; you can still tweak settings.</div>
+            </div>
+
+            <div class="field">
+              <label for="outFormat">Output format (raster)</label>
+              <select id="outFormat">
+                <option value="keep">Keep original</option>
+                <option value="jpeg">JPEG</option>
+                <option value="png">PNG</option>
+                <option value="webp">WebP</option>
+              </select>
+              <div class="hint">WebP is smaller for photos; PNG best for sharp UI + transparency.</div>
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div class="field">
+              <label for="maxWidth">Max width</label>
+              <input id="maxWidth" type="number" min="16" max="8192" step="1" value="1024" />
+            </div>
+            <div class="field">
+              <label for="maxHeight">Max height</label>
+              <input id="maxHeight" type="number" min="16" max="8192" step="1" value="1024" />
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div class="field">
+              <label for="quality">Quality (JPEG/WebP)</label>
+              <div class="inline">
+                <input id="quality" type="range" min="40" max="100" value="85" />
+                <strong><span id="qualityLabel">85</span></strong>
+              </div>
+              <div class="hint">Higher = better quality, larger files.</div>
+            </div>
+            <div class="field">
+              <label>Privacy</label>
+              <label class="toggle"><input id="stripMeta" type="checkbox" checked /> Strip metadata (GPS/EXIF) on export</label>
+              <div class="hint">Canvas exports naturally remove EXIF; this makes it explicit.</div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="processBtn">Process Images</button>
+            <button id="downloadAllBtn" disabled>Download All (ZIP)</button>
+          </div>
+
+          <div class="statusbar" id="statusbar" style="display:none;">
+            <div class="status-text"><span class="dot" style="animation-duration: 1.2s"></span><span id="statusText">Processing…</span></div>
+            <div class="progress" aria-hidden="true"><div id="progressFill"></div></div>
+          </div>
+        </div>
+
+        <table id="resultsTable" style="display:none;">
+          <thead>
+            <tr>
+              <th>Preview</th>
+              <th>File</th>
+              <th>Original Size</th>
+              <th>Processed Size</th>
+              <th>Savings</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div id="summary"></div>
+      </div>
+    </div>
+
+    <p class="footer-note">All processing is done locally in your browser. No data is uploaded to any server.</p>
+  </div>
+</body>
+</html>
