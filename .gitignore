@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Node/JS (if added later)
+node_modules/
+
+# Build outputs (if added later)
+dist/
